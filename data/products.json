@@ -2,7 +2,7 @@
   {
     "id": "weed",
     "name": "Weed",
-    "icon": "🌿",
+    "iconClass": "fa-solid fa-seedling",
     "basePrice": 100,
     "weight": 1,
     "description": "Loose cannabis buds, low potency."
@@ -10,7 +10,7 @@
   {
     "id": "weed_brick",
     "name": "Weed Brick",
-    "icon": "💎",
+    "iconClass": "fa-solid fa-cube",
     "basePrice": 500,
     "weight": 5,
     "description": "High-density compressed brick of weed."
@@ -18,7 +18,7 @@
   {
     "id": "cocaine",
     "name": "Cocaine",
-    "icon": "❄️",
+    "iconClass": "fa-solid fa-snowflake",
     "basePrice": 250,
     "weight": 1,
     "description": "Fine white powder, moderate purity."
@@ -26,7 +26,7 @@
   {
     "id": "cocaine_pellet",
     "name": "Cocaine Pellet",
-    "icon": "💠",
+    "iconClass": "fa-solid fa-gem",
     "basePrice": 600,
     "weight": 2,
     "description": "Highly pure, pressed into a pellet."
@@ -34,7 +34,7 @@
   {
     "id": "mdma",
     "name": "MDMA",
-    "icon": "💊",
+    "iconClass": "fa-solid fa-capsules",
     "basePrice": 150,
     "weight": 1,
     "description": "Ecstasy pills, club-style."
@@ -42,7 +42,7 @@
   {
     "id": "lsd",
     "name": "LSD",
-    "icon": "🎴",
+    "iconClass": "fa-solid fa-water",
     "basePrice": 200,
     "weight": 0.5,
     "description": "Micro-doses on blotter paper."
@@ -50,7 +50,7 @@
   {
     "id": "acid",
     "name": "Acid",
-    "icon": "☠️",
+    "iconClass": "fa-solid fa-vial",
     "basePrice": 300,
     "weight": 1,
     "description": "Liquid hallucinogen in small vials."
@@ -58,7 +58,7 @@
   {
     "id": "glass",
     "name": "Glass Bottle",
-    "icon": "🍾",
+    "iconClass": "fa-solid fa-wine-glass-empty",
     "basePrice": 10,
     "weight": 1,
     "description": "Empty glass bottle, crafting material."
@@ -66,7 +66,7 @@
   {
     "id": "alcohol",
     "name": "Alcohol",
-    "icon": "🥃",
+    "iconClass": "fa-solid fa-wine-bottle",
     "basePrice": 20,
     "weight": 1,
     "description": "High-proof alcohol, flammable."
@@ -74,7 +74,7 @@
   {
     "id": "molotov",
     "name": "Molotov Cocktail",
-    "icon": "🔥",
+    "iconClass": "fa-solid fa-fire",
     "basePrice": 150,
     "weight": 2,
     "description": "Improvised firebomb (glass + alcohol)."
@@ -82,7 +82,7 @@
   {
     "id": "knife",
     "name": "Knife",
-    "icon": "🔪",
+    "iconClass": "fa-solid fa-knife-kitchen",
     "basePrice": 200,
     "weight": 1,
     "description": "Basic steel knife, melee weapon."
@@ -90,7 +90,7 @@
   {
     "id": "pistol",
     "name": "Pistol",
-    "icon": "🔫",
+    "iconClass": "fa-solid fa-gun",
     "basePrice": 1000,
     "weight": 4,
     "description": "9mm handgun, reliable sidearm."
