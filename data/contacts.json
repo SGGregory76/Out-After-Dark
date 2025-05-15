@@ -1,0 +1,73 @@
+[
+  {
+    "id": "blaze",
+    "name": "Blaze",
+    "role": "Dealer",
+    "status": "friendly",
+    "offers": [
+      { "item": "weed", "buyPriceMult": 0.9, "sellPriceMult": 1.1 },
+      { "item": "coke", "buyPriceMult": 1.0, "sellPriceMult": 1.2 }
+    ],
+    "missions": ["blaze_intro", "blaze_resupply"],
+    "rules": {
+      "unlockRep": 0,
+      "cooldownHours": 1
+    }
+  },
+  {
+    "id": "maya",
+    "name": "Maya",
+    "role": "Supplier",
+    "status": "neutral",
+    "offers": [
+      { "item": "mdma", "buyPriceMult": 0.85, "sellPriceMult": 1.15 },
+      { "item": "lsd",  "buyPriceMult": 0.8, "sellPriceMult": 1.2 }
+    ],
+    "missions": ["maya_supply_run", "maya_backdoor"],
+    "rules": {
+      "unlockRep": 10,
+      "cooldownHours": 2
+    }
+  },
+  {
+    "id": "rico",
+    "name": "Rico",
+    "role": "Runner",
+    "status": "neutral",
+    "offers": [
+      { "item": "weed", "buyPriceMult": 1.0, "sellPriceMult": 1.0 },
+      { "item": "water","buyPriceMult": 0.5, "sellPriceMult": 0.75 }
+    ],
+    "missions": ["rico_delivery"],
+    "rules": {
+      "unlockRep": 5,
+      "cooldownHours": 0.5
+    }
+  },
+  {
+    "id": "silk",
+    "name": "Silk",
+    "role": "Chemist",
+    "status": "hostile",
+    "offers": [
+      { "item": "acid", "buyPriceMult": 1.2, "sellPriceMult": 1.5 }
+    ],
+    "missions": ["silk_experiment"],
+    "rules": {
+      "unlockRep": 20,
+      "cooldownHours": 3
+    }
+  },
+  {
+    "id": "viper",
+    "name": "Viper",
+    "role": "Enforcer",
+    "status": "hostile",
+    "offers": [],
+    "missions": ["viper_intimidate"],
+    "rules": {
+      "unlockRep": 15,
+      "cooldownHours": 4
+    }
+  }
+]
