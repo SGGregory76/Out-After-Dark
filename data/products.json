@@ -1,0 +1,98 @@
+[
+  {
+    "id": "weed",
+    "name": "Weed",
+    "icon": "🌿",
+    "basePrice": 100,
+    "weight": 1,
+    "description": "Loose cannabis buds, low potency."
+  },
+  {
+    "id": "weed_brick",
+    "name": "Weed Brick",
+    "icon": "💎",
+    "basePrice": 500,
+    "weight": 5,
+    "description": "High-density compressed brick of weed."
+  },
+  {
+    "id": "cocaine",
+    "name": "Cocaine",
+    "icon": "❄️",
+    "basePrice": 250,
+    "weight": 1,
+    "description": "Fine white powder, moderate purity."
+  },
+  {
+    "id": "cocaine_pellet",
+    "name": "Cocaine Pellet",
+    "icon": "💠",
+    "basePrice": 600,
+    "weight": 2,
+    "description": "Highly pure, pressed into a pellet."
+  },
+  {
+    "id": "mdma",
+    "name": "MDMA",
+    "icon": "💊",
+    "basePrice": 150,
+    "weight": 1,
+    "description": "Ecstasy pills, club-style."
+  },
+  {
+    "id": "lsd",
+    "name": "LSD",
+    "icon": "🎴",
+    "basePrice": 200,
+    "weight": 0.5,
+    "description": "Micro-doses on blotter paper."
+  },
+  {
+    "id": "acid",
+    "name": "Acid",
+    "icon": "☠️",
+    "basePrice": 300,
+    "weight": 1,
+    "description": "Liquid hallucinogen in small vials."
+  },
+  {
+    "id": "glass",
+    "name": "Glass Bottle",
+    "icon": "🍾",
+    "basePrice": 10,
+    "weight": 1,
+    "description": "Empty glass bottle, crafting material."
+  },
+  {
+    "id": "alcohol",
+    "name": "Alcohol",
+    "icon": "🥃",
+    "basePrice": 20,
+    "weight": 1,
+    "description": "High-proof alcohol, flammable."
+  },
+  {
+    "id": "molotov",
+    "name": "Molotov Cocktail",
+    "icon": "🔥",
+    "basePrice": 150,
+    "weight": 2,
+    "description": "Improvised firebomb (glass + alcohol)."
+  },
+  {
+    "id": "knife",
+    "name": "Knife",
+    "icon": "🔪",
+    "basePrice": 200,
+    "weight": 1,
+    "description": "Basic steel knife, melee weapon."
+  },
+  {
+    "id": "pistol",
+    "name": "Pistol",
+    "icon": "🔫",
+    "basePrice": 1000,
+    "weight": 4,
+    "description": "9mm handgun, reliable sidearm."
+  }
+]
