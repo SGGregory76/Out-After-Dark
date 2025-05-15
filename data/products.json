@@ -3,6 +3,7 @@
     "id": "weed",
     "name": "Weed",
     "iconClass": "fa-solid fa-seedling",
+    "emoji": "🌿",
     "basePrice": 100,
     "weight": 1,
     "description": "Loose cannabis buds, low potency."
@@ -11,6 +12,7 @@
     "id": "weed_brick",
     "name": "Weed Brick",
     "iconClass": "fa-solid fa-cube",
+    "emoji": "💎",
     "basePrice": 500,
     "weight": 5,
     "description": "High-density compressed brick of weed."
@@ -19,6 +21,7 @@
     "id": "cocaine",
     "name": "Cocaine",
     "iconClass": "fa-solid fa-snowflake",
+    "emoji": "❄️",
     "basePrice": 250,
     "weight": 1,
     "description": "Fine white powder, moderate purity."
@@ -27,6 +30,7 @@
     "id": "cocaine_pellet",
     "name": "Cocaine Pellet",
     "iconClass": "fa-solid fa-gem",
+    "emoji": "💠",
     "basePrice": 600,
     "weight": 2,
     "description": "Highly pure, pressed into a pellet."
@@ -35,6 +39,7 @@
     "id": "mdma",
     "name": "MDMA",
     "iconClass": "fa-solid fa-capsules",
+    "emoji": "💊",
     "basePrice": 150,
     "weight": 1,
     "description": "Ecstasy pills, club-style."
@@ -43,6 +48,7 @@
     "id": "lsd",
     "name": "LSD",
     "iconClass": "fa-solid fa-water",
+    "emoji": "🌊",
     "basePrice": 200,
     "weight": 0.5,
     "description": "Micro-doses on blotter paper."
@@ -51,6 +57,7 @@
     "id": "acid",
     "name": "Acid",
     "iconClass": "fa-solid fa-vial",
+    "emoji": "☠️",
     "basePrice": 300,
     "weight": 1,
     "description": "Liquid hallucinogen in small vials."
@@ -59,6 +66,7 @@
     "id": "glass",
     "name": "Glass Bottle",
     "iconClass": "fa-solid fa-wine-glass-empty",
+    "emoji": "🍾",
     "basePrice": 10,
     "weight": 1,
     "description": "Empty glass bottle, crafting material."
@@ -67,6 +75,7 @@
     "id": "alcohol",
     "name": "Alcohol",
     "iconClass": "fa-solid fa-wine-bottle",
+    "emoji": "🥃",
     "basePrice": 20,
     "weight": 1,
     "description": "High-proof alcohol, flammable."
@@ -75,6 +84,7 @@
     "id": "molotov",
     "name": "Molotov Cocktail",
     "iconClass": "fa-solid fa-fire",
+    "emoji": "🔥",
     "basePrice": 150,
     "weight": 2,
     "description": "Improvised firebomb (glass + alcohol)."
@@ -83,6 +93,7 @@
     "id": "knife",
     "name": "Knife",
     "iconClass": "fa-solid fa-knife-kitchen",
+    "emoji": "🔪",
     "basePrice": 200,
     "weight": 1,
     "description": "Basic steel knife, melee weapon."
@@ -91,6 +102,7 @@
     "id": "pistol",
     "name": "Pistol",
     "iconClass": "fa-solid fa-gun",
+    "emoji": "🔫",
     "basePrice": 1000,
     "weight": 4,
     "description": "9mm handgun, reliable sidearm."
