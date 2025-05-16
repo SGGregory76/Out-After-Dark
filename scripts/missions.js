@@ -1,7 +1,7 @@
 (function(){
   // Missions module with items integration
-  const MISSIONS_URL = 'https://cdn.jsdelivr.net/gh/yourusername/yourrepo@main/data/missions.json';
-  const ITEMS_URL    = 'https://cdn.jsdelivr.net/gh/yourusername/yourrepo@main/data/items.json';
+  const MISSIONS_URL = 'https://cdn.jsdelivr.net/gh/SGGregory76/Out-After-Dark@main/data/missions.json';
+  const ITEMS_URL    = 'https://cdn.jsdelivr.net/gh/SGGregory76/Out-After-Dark@main/data/items.json';
   const STATS_KEY    = 'gameStats';
   const MISSION_KEY  = 'gameMissions';
 
