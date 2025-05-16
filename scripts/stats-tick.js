@@ -100,19 +100,3 @@
 +    setInterval(tick, intervalMs);
 +  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Ch
