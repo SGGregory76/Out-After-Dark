@@ -1,7 +1,7 @@
 (function(){
   // Inventory module
   const PRODUCTS_URL =
-    'https://raw.githubusercontent.com/yourusername/yourrepo/main/data/products.json'
+    'https://raw.githubusercontent.com/SGGregory76/Out-After-Dark/main/data/products.json'
     + '?t=' + Date.now();
   const CASH_KEY = 'gameCash';
   const INV_KEY  = 'gameInventory';
