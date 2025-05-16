@@ -1,7 +1,7 @@
 (function(){
   // Contacts module
   const CONTACTS_URL =
-    'https://raw.githubusercontent.com/yourusername/yourrepo/main/data/contacts.json'
+    'https://raw.githubusercontent.com/SGGregory76/Out-After-Dark/main/data/contacts.json'
     + '?t=' + Date.now();
 
   async function loadContacts() {
