@@ -1,142 +1,114 @@
 (function(){
-  // Stats Tick module with live updates and Game Over
   const STATS_KEY = 'gameStats';
   const DEFAULT_STATS = {
-    health: 100, maxHealth: 100,
-    stamina: 100, maxStamina: 100,
-    hunger: 0, thirst: 0,
-    rep: 0, heat: 0,
-    cash: 0, xp: 0, level: 1,
-    carryWeight: 0, maxCarryWeight: 50
+    health:100, maxHealth:100,
+    stamina:100, maxStamina:100,
+    hunger:0, thirst:0,
+    rep:0, heat:0,
+    cash:0, xp:0, level:1,
+    carryWeight:0, maxCarryWeight:50
   };
-  let gameOverTriggered = false;
+  let gameOver = false;
 
-  // Load stats (or initialize defaults)
   async function loadStats() {
     const raw = localStorage.getItem(STATS_KEY);
     if (raw) {
-      try {
-        const obj = JSON.parse(raw);
-        return Object.assign({}, DEFAULT_STATS, obj);
-      } catch {
-        return { ...DEFAULT_STATS };
-      }
+      try { return Object.assign({}, DEFAULT_STATS, JSON.parse(raw)); }
+      catch {} 
     }
     localStorage.setItem(STATS_KEY, JSON.stringify(DEFAULT_STATS));
     return { ...DEFAULT_STATS };
   }
 
-  // Save stats
-  function saveStats(stats) {
-    localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+  function saveStats(s) {
+    localStorage.setItem(STATS_KEY, JSON.stringify(s));
   }
 
-  // Render stats into the DOM
-  function renderStats(stats) {
-    const updates = [
-      { id: 'stat-health',    text: `❤️ ${stats.health}/${stats.maxHealth}` },
-      { id: 'stat-stamina',   text: `💪 ${stats.stamina}/${stats.maxStamina}` },
-      { id: 'stat-hunger',    text: `🍗 ${stats.hunger}` },
-      { id: 'stat-thirst',    text: `💧 ${stats.thirst}` },
-      { id: 'stat-rep',       text: `🤝 ${stats.rep}` },
-      { id: 'stat-heat',      text: `🔥 ${stats.heat}` },
-      { id: 'stat-cash',      text: `💵 $${stats.cash}` }
-    ];
-    updates.forEach(u => {
-      const el = document.getElementById(u.id);
-      if (el) el.textContent = u.text;
+  function renderStats(s) {
+    // If you still have hidden stat- spans, update them:
+    ['health','stamina','hunger','thirst','rep','heat','cash'].forEach(key => {
+      const el = document.getElementById('stat-'+key);
+      if (el) {
+        const icons = {
+          health: '❤', stamina: '💪',
+          hunger: '🍗', thirst: '💧',
+          rep: '🤝', heat: '🔥',
+          cash: '💵'
+        };
+        let text = icons[key] + ' ';
+        if (key==='health' || key==='stamina')
+          text += `${s[key]}/${s['max'+key.charAt(0).toUpperCase()+key.slice(1)]}`;
+        else text += s[key];
+        el.textContent = text;
+      }
     });
+
+    // Now update your visible hub directly:
+    const hub = {
+      health:   document.getElementById('hub-health'),
+      stamina:  document.getElementById('hub-stamina'),
+      hunger:   document.getElementById('hub-hunger'),
+      thirst:   document.getElementById('hub-thirst'),
+      rep:      document.getElementById('hub-rep'),
+      heat:     document.getElementById('hub-heat'),
+      cash:     document.getElementById('hub-cash')
+    };
+    if (hub.health)   hub.health.innerHTML   = `&#10084; ${s.health}/${s.maxHealth}`;
+    if (hub.stamina)  hub.stamina.textContent= `💪 ${s.stamina}/${s.maxStamina}`;
+    if (hub.hunger)   hub.hunger.textContent = `🍗 ${s.hunger}`;
+    if (hub.thirst)   hub.thirst.textContent = `💧 ${s.thirst}`;
+    if (hub.rep)      hub.rep.textContent    = `🤝 ${s.rep}`;
+    if (hub.heat)     hub.heat.textContent   = `🔥 ${s.heat}`;
+    if (hub.cash)     hub.cash.textContent   = `💵 $${s.cash}`;
   }
 
-  // The main tick function
   async function tick() {
-    const stats = await loadStats();
+    const s = await loadStats();
+    // natural decay/regeneration
+    s.hunger = Math.min(100, s.hunger + 1);
+    s.thirst = Math.min(100, s.thirst + 1);
+    if (s.hunger>80||s.thirst>80) s.health = Math.max(0, s.health - 1);
+    s.stamina = Math.min(s.maxStamina, s.stamina + 2);
 
-    // Hunger & Thirst increase
-    stats.hunger = Math.min(100, stats.hunger + 1);
-    stats.thirst = Math.min(100, stats.thirst + 1);
+    saveStats(s);
+    renderStats(s);
 
-    // Health decay
-    if (stats.hunger > 80 || stats.thirst > 80) {
-      stats.health = Math.max(0, stats.health - 1);
-    }
-
-    // Stamina regen
-    stats.stamina = Math.min(stats.maxStamina, stats.stamina + 2);
-
-    saveStats(stats);
-    renderStats(stats);
-
-    // Game Over check
-    if (!gameOverTriggered && stats.health <= 0) {
-      gameOverTriggered = true;
-      setTimeout(() => {
-        if (confirm('Game Over! Your character has died. Restart the game?')) {
-          // Clear all game data keys
-          [
-            STATS_KEY,
-            'gameInventory',
-            'gameCraftJobs',
-            'gameMissions',
-            'gameLog',
-            'gameSettings',
-            'gameCash'
-          ].forEach(k => localStorage.removeItem(k));
+    if (!gameOver && s.health<=0) {
+      gameOver = true;
+      setTimeout(()=>{
+        if (confirm('Game Over! Restart?')) {
+          ['gameStats','gameInventory','gameCraftJobs','gameMissions','gameLog','gameSettings','gameCash']
+            .forEach(k=>localStorage.removeItem(k));
           location.reload();
         }
-      }, 200);
+      },200);
     }
   }
 
-  // Expose init & renderStats
   window.StatsTick = {
-    renderStats,
-    init: function(intervalMs = 60000) {
-      // Initial render & immediate game-over check
-      loadStats().then(s => {
+    renderStats, 
+    init: function(intervalMs=60000){
+      loadStats().then(s=>{
         renderStats(s);
-        if (!gameOverTriggered && s.health <= 0) {
-          gameOverTriggered = true;
-          setTimeout(() => {
-            if (confirm('Game Over! Your character has died. Restart the game?')) {
-              [
-                STATS_KEY,
-                'gameInventory',
-                'gameCraftJobs',
-                'gameMissions',
-                'gameLog',
-                'gameSettings',
-                'gameCash'
-              ].forEach(k => localStorage.removeItem(k));
-              location.reload();
-            }
-          }, 200);
+        if (!gameOver && s.health<=0) {
+          gameOver = true;
+          setTimeout(()=>{ if(confirm('Game Over! Restart?')) location.reload(); },200);
         }
       });
-      // Start periodic ticks
-      setInterval(tick, intervalMs);
+      setInterval(tick,intervalMs);
     }
   };
 
-  // Listen for storage events (other scripts/iframes)
-  window.addEventListener('storage', e => {
-    if (e.key === STATS_KEY && !gameOverTriggered) {
-      try {
-        const newStats = JSON.parse(e.newValue);
-        renderStats(Object.assign({}, DEFAULT_STATS, newStats));
-      } catch {}
-    }
+  // live‐update on storage or custom events
+  window.addEventListener('storage', e=>{
+    if(e.key===STATS_KEY) loadStats().then(renderStats);
   });
+  window.addEventListener('statsUpdated', e=>renderStats(Object.assign({},DEFAULT_STATS,e.detail)));
 
-  // Listen for custom 'statsUpdated' events
-  window.addEventListener('statsUpdated', e => {
-    renderStats(Object.assign({}, DEFAULT_STATS, e.detail));
-  });
-
-  // Auto‑init if stats elements are present
-  document.addEventListener('DOMContentLoaded', () => {
-    if (document.getElementById('stat-health')) {
-      window.StatsTick.init();
+  // auto‑init if your theme loaded the spans
+  document.addEventListener('DOMContentLoaded',()=>{
+    if(document.getElementById('hub-health')||document.getElementById('stat-health')){
+      StatsTick.init();
     }
   });
 })();
