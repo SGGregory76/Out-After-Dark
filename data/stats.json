@@ -1,0 +1,15 @@
+{
+  "health": 100,
+  "maxHealth": 100,
+  "stamina": 100,
+  "maxStamina": 100,
+  "hunger": 0,
+  "thirst": 0,
+  "rep": 0,
+  "heat": 0,
+  "cash": 0,
+  "xp": 0,
+  "level": 1,
+  "carryWeight": 0,
+  "maxCarryWeight": 50
+}
