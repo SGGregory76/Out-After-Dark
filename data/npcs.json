@@ -1,0 +1,152 @@
+[
+  {
+    "id": "blaze",
+    "name": "Blaze",
+    "role": "Supplier",
+    "status": "Neutral",
+    "emoji": "🔥",
+    "iconClass": "fa-solid fa-fire",
+    "age": 32,
+    "alignment": "Chaotic Neutral",
+    "location": "Abandoned Warehouse",
+    "reputation": 0,
+    "backstory": "Once a small‐time hustler, Blaze built a reputation for reliable supply runs under the cover of city ruins.",
+    "offers": ["weed", "meth"],
+    "missions": ["blaze_intro", "mission_09"],
+    "dialogue": [
+      "You got the creds?",
+      "My product moves fast—don't waste my time.",
+      "Meet me when you have the street cred."
+    ],
+    "dynamicHooks": {
+      "onTrade": "handleBlazeTrade",
+      "onTalk": "handleBlazeTalk",
+      "onMission": "startBlazeMission"
+    }
+  },
+  {
+    "id": "maya",
+    "name": "Maya",
+    "role": "Chemist",
+    "status": "Friendly",
+    "emoji": "🧪",
+    "iconClass": "fa-solid fa-vial",
+    "age": 28,
+    "alignment": "Lawful Neutral",
+    "location": "Dockyards Lab",
+    "reputation": 10,
+    "backstory": "A former research assistant turned underground chemist, Maya specializes in designer substances.",
+    "offers": ["mdma_base", "acid"],
+    "missions": ["maya_supply_run", "mission_07"],
+    "dialogue": [
+      "The formula is volatile—handle with care.",
+      "I need precursors before the next batch.",
+      "Trust me, the payoff is worth the risk."
+    ],
+    "dynamicHooks": {
+      "onTrade": "handleMayaTrade",
+      "onTalk": "handleMayaTalk",
+      "onMission": "startMayaMission"
+    }
+  },
+  {
+    "id": "rico",
+    "name": "Rico",
+    "role": "Driver",
+    "status": "Ally",
+    "emoji": "🚗",
+    "iconClass": "fa-solid fa-car",
+    "age": 35,
+    "alignment": "Neutral Good",
+    "location": "Downtown Streets",
+    "reputation": 5,
+    "backstory": "A former courier for the syndicate, Rico now runs solo jobs for extra profit.",
+    "offers": ["delivery_service", "escape_routes"],
+    "missions": ["rico_delivery", "mission_08"],
+    "dialogue": [
+      "Need a quick getaway? I know the back alleys.",
+      "No job's too hot if you got the cash.",
+      "Keep your eyes on the road and your mouth shut."
+    ],
+    "dynamicHooks": {
+      "onTrade": "handleRicoTrade",
+      "onTalk": "handleRicoTalk",
+      "onMission": "startRicoMission"
+    }
+  },
+  {
+    "id": "silk",
+    "name": "Silk",
+    "role": "Mastermind",
+    "status": "Hostile",
+    "emoji": "🕷️",
+    "iconClass": "fa-solid fa-spider",
+    "age": 40,
+    "alignment": "Lawful Evil",
+    "location": "Secure Lab",
+    "reputation": 20,
+    "backstory": "Operating from the shadows, Silk orchestrates high‐risk synth operations across the city.",
+    "offers": ["medkit", "counterfeit_cash"],
+    "missions": ["silk_experiment", "mission_12"],
+    "dialogue": [
+      "Knowledge is power—and profit.",
+      "One wrong step and everything blows.",
+      "Precision is the difference between genius and catastrophe."
+    ],
+    "dynamicHooks": {
+      "onTrade": "handleSilkTrade",
+      "onTalk": "handleSilkTalk",
+      "onMission": "startSilkMission"
+    }
+  },
+  {
+    "id": "viper",
+    "name": "Viper",
+    "role": "Enforcer",
+    "status": "Intimidated",
+    "emoji": "🐍",
+    "iconClass": "fa-solid fa-snake",
+    "age": 30,
+    "alignment": "Chaotic Evil",
+    "location": "Checkpoint",
+    "reputation": 15,
+    "backstory": "An ex‐military operative, Viper enforces territory control with ruthless efficiency.",
+    "offers": ["security", "intimidation_services"],
+    "missions": ["viper_intimidate", "mission_19"],
+    "dialogue": [
+      "Cross me and you won't see sunrise.",
+      "I don't take kindly to trespassers.",
+      "Show me the money, or get out."
+    ],
+    "dynamicHooks": {
+      "onTrade": "handleViperTrade",
+      "onTalk": "handleViperTalk",
+      "onMission": "startViperMission"
+    }
+  },
+  {
+    "id": "echo",
+    "name": "Echo",
+    "role": "Hacker",
+    "status": "Mysterious",
+    "emoji": "💾",
+    "iconClass": "fa-solid fa-microchip",
+    "age": 26,
+    "alignment": "True Neutral",
+    "location": "Datacenter",    
+    "reputation": 8,
+    "backstory": "A digital ghost, Echo leaves no trace but a perfect backdoor in corporate networks.",
+    "offers": ["hack_services", "intel"],
+    "missions": ["echo_backdoor", "mission_21"],
+    "dialogue": [
+      "Your secrets are safe with me.",
+      "I work in the shadows of the mainframe.",
+      "Click, crack, extract—my world is binary."
+    ],
+    "dynamicHooks": {
+      "onTrade": "handleEchoTrade",
+      "onTalk": "handleEchoTalk",
+      "onMission": "startEchoMission"
+    }
+  }
+]
