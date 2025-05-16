@@ -1,6 +1,6 @@
 (async function(){
   // Unified Inventory Script using items.json
-  const ITEMS_URL = 'https://cdn.jsdelivr.net/gh/yourusername/yourrepo@main/data/items.json';
+  const ITEMS_URL = 'https://cdn.jsdelivr.net/gh/SGGregory76/Out-After-Dark@main/data/items.json';
   const INV_KEY   = 'gameInventory';
   const CASH_KEY  = 'gameCash';
 
