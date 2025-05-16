@@ -78,16 +78,41 @@
 
   window.StatsTick = {
     init: function(intervalMs = 60000) {
-      // Initial render
-      loadStats().then(s => renderStats(s));
-      // Start ticking
-      setInterval(tick, intervalMs);
-    }
-  };
++    // Initial render and immediate Game Over check
++    loadStats().then(s => {
++      renderStats(s);
++      // If already dead, trigger game over prompt right away
++      if (!gameOverTriggered && s.health <= 0) {
++        gameOverTriggered = true;
++        setTimeout(() => {
++          if (confirm('Game Over! Your character has died. Restart the game?')) {
++            const keys = [
++              STATS_KEY, 'gameInventory', 'gameCraftJobs',
++              'gameMissions', 'gameLog', 'gameSettings', 'gameCash'
++            ];
++            keys.forEach(k => localStorage.removeItem(k));
++            location.reload();
++          }
++        }, 200);
++      }
++    });
++    // Continue regular ticking
++    setInterval(tick, intervalMs);
++  }
 
-  document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('stat-health')) {
-      StatsTick.init();
-    }
-  });
-})();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ch
