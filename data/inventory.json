@@ -1,0 +1,10 @@
+{
+  "gameInventory": {
+    "water_bottle": 5,
+    "canned_food": 3,
+    "bandage": 2,
+    "weed": 10,
+    "lockpick": 1
+  },
+  "gameCash": 150
+}
