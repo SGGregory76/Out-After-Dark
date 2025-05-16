@@ -1,0 +1,216 @@
+[
+  {
+    "id": "downtown",
+    "name": "Downtown",
+    "icon": "🏙️",
+    "description": "The city center, full of opportunities and dangers.",
+    "accessCost": 0,
+    "requirements": { "level": 1, "rep": 0 },
+    "rewards": { "exp": 50, "cash": 20, "heat": 5, "rep": 2 },
+    "itemsFound": [
+      { "id": "cigarette", "quantity": 1, "chance": 0.3 },
+      { "id": "lockpick", "quantity": 1, "chance": 0.1 },
+      { "id": "canned_food", "quantity": 1, "chance": 0.2 }
+    ],
+    "missionsAvailable": [ "mission_01", "mission_02" ],
+    "effects": { "hungerIncrease": 2, "thirstIncrease": 3 }
+  },
+  {
+    "id": "abandoned_warehouse",
+    "name": "Abandoned Warehouse",
+    "icon": "🏚️",
+    "description": "A derelict building favored by smugglers and suppliers.",
+    "accessCost": 10,
+    "requirements": { "level": 2, "rep": 5 },
+    "rewards": { "exp": 100, "cash": 50, "heat": 10, "rep": 5 },
+    "itemsFound": [
+      { "id": "weed", "quantity": 5, "chance": 0.5 },
+      { "id": "meth", "quantity": 2, "chance": 0.2 },
+      { "id": "mdma_base", "quantity": 1, "chance": 0.1 }
+    ],
+    "missionsAvailable": [ "blaze_intro", "mission_09" ],
+    "effects": { "hungerIncrease": 3, "thirstIncrease": 4 }
+  },
+  {
+    "id": "dockyards_lab",
+    "name": "Dockyards Lab",
+    "icon": "⚗️",
+    "description": "A hidden lab on the docks where chemists concoct potent substances.",
+    "accessCost": 20,
+    "requirements": { "level": 3, "rep": 10 },
+    "rewards": { "exp": 150, "cash": 75, "heat": 15, "rep": 8 },
+    "itemsFound": [
+      { "id": "mdma", "quantity": 1, "chance": 0.4 },
+      { "id": "acid", "quantity": 1, "chance": 0.3 },
+      { "id": "chemical_kit", "quantity": 1, "chance": 0.1 }
+    ],
+    "missionsAvailable": [ "maya_supply_run", "mission_07" ],
+    "effects": { "hungerIncrease": 4, "thirstIncrease": 5 }
+  },
+  {
+    "id": "downtown_checkpoint",
+    "name": "Downtown Checkpoint",
+    "icon": "🚧",
+    "description": "A fortified checkpoint controlled by enforcers.",
+    "accessCost": 15,
+    "requirements": { "level": 4, "rep": 12 },
+    "rewards": { "exp": 120, "cash": 60, "heat": 20, "rep": 10 },
+    "itemsFound": [
+      { "id": "ammo_9mm", "quantity": 10, "chance": 0.25 },
+      { "id": "grenade", "quantity": 1, "chance": 0.05 }
+    ],
+    "missionsAvailable": [ "viper_intimidate", "mission_19" ],
+    "effects": { "hungerIncrease": 2, "thirstIncrease": 2 }
+  },
+  {
+    "id": "datacenter",
+    "name": "Datacenter",
+    "icon": "💾",
+    "description": "Secure facility filled with high-end servers — a hacker’s playground.",
+    "accessCost": 25,
+    "requirements": { "level": 5, "rep": 15 },
+    "rewards": { "exp": 200, "cash": 100, "heat": 25, "rep": 12 },
+    "itemsFound": [
+      { "id": "hacking_toolkit", "quantity": 1, "chance": 0.3 },
+      { "id": "data_chip", "quantity": 1, "chance": 0.2 }
+    ],
+    "missionsAvailable": [ "echo_backdoor", "mission_21" ],
+    "effects": { "hungerIncrease": 5, "thirstIncrease": 5 }
+  },
+
+  {
+    "id": "slums",
+    "name": "The Slums",
+    "icon": "🏚️",
+    "description": "Cramped, lawless streets where anything can be bought or sold.",
+    "accessCost": 5,
+    "requirements": { "level": 1, "rep": 1 },
+    "rewards": { "exp": 60, "cash": 30, "heat": 8, "rep": 3 },
+    "itemsFound": [
+      { "id": "cigarette", "quantity": 2, "chance": 0.4 },
+      { "id": "metal_shard", "quantity": 1, "chance": 0.3 }
+    ],
+    "missionsAvailable": [ "mission_03", "mission_04" ],
+    "effects": { "hungerIncrease": 3, "thirstIncrease": 2 }
+  },
+  {
+    "id": "underground_tunnel",
+    "name": "Underground Tunnel",
+    "icon": "🕳️",
+    "description": "Network of forgotten passages beneath the city.",
+    "accessCost": 0,
+    "requirements": { "level": 2, "rep": 4 },
+    "rewards": { "exp": 80, "cash": 40, "heat": 12, "rep": 4 },
+    "itemsFound": [
+      { "id": "rope", "quantity": 1, "chance": 0.3 },
+      { "id": "lockpick", "quantity": 1, "chance": 0.2 }
+    ],
+    "missionsAvailable": [ "mission_05", "mission_06" ],
+    "effects": { "hungerIncrease": 4, "thirstIncrease": 3 }
+  },
+  {
+    "id": "industrial_park",
+    "name": "Industrial Park",
+    "icon": "🏭",
+    "description": "Rusting factories and warehouses, rich with scrap.",
+    "accessCost": 10,
+    "requirements": { "level": 3, "rep": 6 },
+    "rewards": { "exp": 110, "cash": 55, "heat": 10, "rep": 6 },
+    "itemsFound": [
+      { "id": "metal_shard", "quantity": 3, "chance": 0.5 },
+      { "id": "gunpowder", "quantity": 1, "chance": 0.2 }
+    ],
+    "missionsAvailable": [ "mission_10", "mission_11" ],
+    "effects": { "hungerIncrease": 5, "thirstIncrease": 4 }
+  },
+  {
+    "id": "abandoned_mall",
+    "name": "Abandoned Mall",
+    "icon": "🏬",
+    "description": "Once a retail center, now a scavenger’s paradise.",
+    "accessCost": 8,
+    "requirements": { "level": 2, "rep": 5 },
+    "rewards": { "exp": 90, "cash": 35, "heat": 9, "rep": 5 },
+    "itemsFound": [
+      { "id": "canned_food", "quantity": 2, "chance": 0.4 },
+      { "id": "bandage", "quantity": 1, "chance": 0.3 }
+    ],
+    "missionsAvailable": [ "mission_12", "mission_13" ],
+    "effects": { "hungerIncrease": 3, "thirstIncrease": 3 }
+  },
+  {
+    "id": "black_market",
+    "name": "Black Market",
+    "icon": "💰",
+    "description": "Hidden bazaar where anything can be traded—for a price.",
+    "accessCost": 20,
+    "requirements": { "level": 4, "rep": 10 },
+    "rewards": { "exp": 130, "cash": 75, "heat": 15, "rep": 10 },
+    "itemsFound": [
+      { "id": "pipebomb", "quantity": 1, "chance": 0.2 },
+      { "id": "medkit", "quantity": 1, "chance": 0.3 }
+    ],
+    "missionsAvailable": [ "mission_14", "mission_15" ],
+    "effects": { "hungerIncrease": 2, "thirstIncrease": 2 }
+  },
+  {
+    "id": "neon_alley",
+    "name": "Neon Alley",
+    "icon": "🌃",
+    "description": "Glowing signs and shady figures lurk around every corner.",
+    "accessCost": 12,
+    "requirements": { "level": 3, "rep": 7 },
+    "rewards": { "exp": 100, "cash": 50, "heat": 12, "rep": 7 },
+    "itemsFound": [
+      { "id": "cocaine", "quantity": 1, "chance": 0.25 },
+      { "id": "mdma", "quantity": 1, "chance": 0.2 }
+    ],
+    "missionsAvailable": [ "mission_16", "mission_17" ],
+    "effects": { "hungerIncrease": 4, "thirstIncrease": 5 }
+  },
+  {
+    "id": "rooftop_garden",
+    "name": "Rooftop Garden",
+    "icon": "🌿",
+    "description": "Secret greenery oasis above the urban sprawl.",
+    "accessCost": 5,
+    "requirements": { "level": 2, "rep": 3 },
+    "rewards": { "exp": 70, "cash": 25, "heat": 5, "rep": 3 },
+    "itemsFound": [
+      { "id": "bandage", "quantity": 1, "chance": 0.2 },
+      { "id": "water_bottle", "quantity": 1, "chance": 0.4 }
+    ],
+    "missionsAvailable": [ "mission_18" ],
+    "effects": { "hungerIncrease": 2, "thirstIncrease": 1 }
+  },
+  {
+    "id": "sewer_system",
+    "name": "Sewer System",
+    "icon": "🚽",
+    "description": "Dark, foul tunnels hiding lost supplies.",
+    "accessCost": 0,
+    "requirements": { "level": 1, "rep": 0 },
+    "rewards": { "exp": 60, "cash": 15, "heat": 8, "rep": 1 },
+    "itemsFound": [
+      { "id": "metal_shard", "quantity": 2, "chance": 0.3 },
+      { "id": "lockpick", "quantity": 1, "chance": 0.15 }
+    ],
+    "missionsAvailable": [ "mission_20" ],
+    "effects": { "hungerIncrease": 5, "thirstIncrease": 6 }
+  },
+  {
+    "id": "corporate_office", 
+    "name": "Corporate Office",
+    "icon": "🏢",
+    "description": "High-security HQ with potential for big haul.",
+    "accessCost": 30,
+    "requirements": { "level": 5, "rep": 20 },
+    "rewards": { "exp": 220, "cash": 120, "heat": 30, "rep": 15 },
+    "itemsFound": [
+      { "id": "data_chip", "quantity": 1, "chance": 0.3 },
+      { "id": "fake_id", "quantity": 1, "chance": 0.1 }
+    ],
+    "missionsAvailable": [ "mission_22" ],
+    "effects": { "hungerIncrease": 3, "thirstIncrease": 4 }
+  }
+]
