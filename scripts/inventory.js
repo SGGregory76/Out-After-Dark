@@ -1,71 +1,65 @@
-// Updated Inventory Script: uses detailed inventory.json definitions
 (async function(){
-  const INV_JSON_URL = 'https://cdn.jsdelivr.net/gh/SGGregory76/Out-After-Dark@main/data/inventory.json';
-  const INV_KEY      = 'gameInventory';
-  const CASH_KEY     = 'gameCash';
+  const ITEMS_URL = 'https://cdn.jsdelivr.net/gh/SGGregory76/Out-After-Dark@main/data/inventory.json';
+  const INV_KEY   = 'gameInventory';
+  const CASH_KEY  = 'gameCash';
+  const STATS_KEY = 'gameStats';
 
-  // Fetch helper
+  // Helper: fetch JSON with cache-bust
   async function fetchJSON(url) {
     const res = await fetch(`${url}?t=${Date.now()}`);
     if (!res.ok) throw new Error(`HTTP ${res.status} loading ${url}`);
     return res.json();
   }
 
-  // Seed from inventory.json if no saved data
-  async function seedInventory() {
-    if (!localStorage.getItem(INV_KEY)) {
-      try {
-        const data = await fetchJSON(INV_JSON_URL);
-        // Initialize inventory quantities & cash
-        const invObj = {};
-        data.inventory.forEach(item => invObj[item.id] = item.quantity);
-        localStorage.setItem(INV_KEY, JSON.stringify(invObj));
-        localStorage.setItem(CASH_KEY, String(data.gameCash || 0));
-        console.log('Inventory seeded');
-      } catch(e) {
-        console.error('Seed failed:', e);
-      }
-    }
-  }
-
-  // Load state
+  // Load or initialize state
   function loadState() {
     return {
-      inv: JSON.parse(localStorage.getItem(INV_KEY) || '{}'),
-      cash: parseInt(localStorage.getItem(CASH_KEY) || '0', 10)
+      inv: JSON.parse(localStorage.getItem(INV_KEY)||'{}'),
+      cash: +localStorage.getItem(CASH_KEY)||0,
+      stats: JSON.parse(localStorage.getItem(STATS_KEY)||'{}')
     };
   }
-  function saveState(state) {
-    localStorage.setItem(INV_KEY, JSON.stringify(state.inv));
-    localStorage.setItem(CASH_KEY, state.cash);
+  function saveState({inv, cash, stats}) {
+    localStorage.setItem(INV_KEY, JSON.stringify(inv));
+    localStorage.setItem(CASH_KEY, cash);
+    localStorage.setItem(STATS_KEY, JSON.stringify(stats));
   }
 
-  // Render cash
-  function renderStats(state) {
-    const el = document.getElementById('stat-cash');
-    if (el) el.textContent = `💵 $${state.cash}`;
-  }
-
-  // Apply usable effect
-  function applyEffect(itemDef) {
-    const eff = itemDef.usable;
-    if (!eff) return;
-    let msg = '';
-    if (eff.thirstRegen) msg += `Thirst -${eff.thirstRegen}. `;
-    if (eff.hungerRegen) msg += `Hunger -${eff.hungerRegen}. `;
-    if (eff.healAmount) msg += `Health +${eff.healAmount}. `;
-    if (eff.effect === 'euphoria') {
-      msg += `Euphoria for ${eff.durationMinutes}min: +${eff.staminaRegen} stamina/min, +${eff.stealthBonus}% stealth. `;
-      msg += `Side: +${eff.sideEffect.hungerIncrease} hunger, +${eff.sideEffect.thirstIncrease} thirst.`;
+  // Apply an item's effect to player stats
+  function applyEffect(effect, stats) {
+    if (effect.hungerRegen) {
+      stats.hunger = Math.max(0, stats.hunger - effect.hungerRegen);
     }
-    alert(msg || 'Effect applied.');
+    if (effect.thirstRegen) {
+      stats.thirst = Math.max(0, stats.thirst - effect.thirstRegen);
+    }
+    if (effect.healAmount) {
+      stats.health = Math.min(stats.maxHealth, stats.health + effect.healAmount);
+    }
+    if (effect.euphoria) {
+      // euphoria effect for duration
+      stats.stamina = Math.min(stats.maxStamina, stats.stamina + (effect.staminaRegen || 0));
+      stats.stealthBonus = (stats.stealthBonus || 0) + (effect.stealthBonus || 0);
+      // schedule removal after duration
+      setTimeout(() => {
+        stats.stealthBonus -= effect.stealthBonus || 0;
+        saveState({inv:state.inv, cash: state.cash, stats});
+      }, effect.durationMinutes * 60000);
+    }
+    saveState({inv: state.inv, cash: state.cash, stats});
+  }
+
+  // Render stats bar (cash only here for brevity)
+  function renderStats(stats) {
+    document.getElementById('stat-cash').textContent = `💵 $${state.cash}`;
+    // You can also render health, hunger, thirst, etc. if you include those spans
   }
 
   // Render inventory grid
-  function renderInventory(defs, state) {
+  function renderInventory(items, state) {
     const grid = document.getElementById('inventory-grid');
     grid.innerHTML = '';
-    defs.inventory.forEach(item => {
+    items.forEach(item => {
       const qty = state.inv[item.id] || 0;
       if (qty <= 0) return;
       const card = document.createElement('div');
@@ -74,21 +68,32 @@
         <div class="icon">${item.icon}</div>
         <div class="name">${item.name}</div>
         <div class="qty">x${qty}</div>
-        <button class="use-btn">Use</button>
-        ${item.sellable ? `<button class="sell-btn">Sell $${item.unitValue}</button>` : ''}
-        <button class="discard-btn">Discard</button>
+        <button data-act="use">Use</button>
+        <button data-act="sell">Sell $${item.baseValue}</button>
+        <button data-act="discard">Discard</button>
       `;
-      // Handlers
-      card.querySelector('.use-btn').onclick = () => {
-        if (item.usable) applyEffect(item);
-        updateQty(item.id, -1);
+      const [useBtn, sellBtn, disBtn] = card.querySelectorAll('button');
+      useBtn.disabled = !(item.effect);
+      sellBtn.disabled = !item.sellable || qty <= 0;
+      disBtn.disabled = qty <= 0;
+
+      useBtn.onclick = () => {
+        // consume one
+        state.inv[item.id] = qty - 1;
+        applyEffect(item.effect, state.stats);
+        init(); // re-render
       };
-      if (item.sellable) card.querySelector('.sell-btn').onclick = () => {
-        state.cash += item.unitValue;
-        document.getElementById('stat-cash').textContent = `💵 $${state.cash}`;
-        updateQty(item.id, -1);
+      sellBtn.onclick = () => {
+        state.cash += item.baseValue;
+        state.inv[item.id] = qty - 1;
+        saveState(state);
+        init();
       };
-      card.querySelector('.discard-btn').onclick = () => updateQty(item.id, -1);
+      disBtn.onclick = () => {
+        state.inv[item.id] = qty - 1;
+        saveState(state);
+        init();
+      };
       grid.appendChild(card);
     });
     if (!grid.querySelector('.inventory-card')) {
@@ -96,27 +101,27 @@
     }
   }
 
-  // Update quantity & re-render
-  function updateQty(id, delta) {
-    const state = loadState();
-    state.inv[id] = Math.max(0, (state.inv[id]||0) + delta);
-    saveState(state);
-    renderStats(state);
-    fetchJSON(INV_JSON_URL).then(defs => renderInventory(defs, state));
-  }
-
-  // Initialization
-  document.addEventListener('DOMContentLoaded', async ()=>{
-    if (!document.getElementById('inventory-grid')) return;
-    await seedInventory();
-    const state = loadState();
-    renderStats(state);
+  // Main init
+  let state;
+  async function init(){
     try {
-      const defs = await fetchJSON(INV_JSON_URL);
-      renderInventory(defs, state);
+      const data = await fetchJSON(ITEMS_URL);
+      state = loadState();
+      // merge defaults for stats if missing
+      state.stats = Object.assign({
+        health:100, maxHealth:100,
+        stamina:100, maxStamina:100,
+        hunger:0, thirst:0
+      }, state.stats);
+      saveState(state);
+      renderStats(state.stats);
+      renderInventory(data.gameInventoryDetails || [], state);
     } catch(e) {
       document.getElementById('inventory-grid').innerHTML =
-        `<div class="error">Error loading definitions:<br>${e.message}</div>`;
+        `<div class="error">Error loading inventory:<br>${e.message}</div>`;
     }
-  });
+  }
+
+  // Kick off immediately
+  init();
 })();
