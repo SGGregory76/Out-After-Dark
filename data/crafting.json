@@ -1,0 +1,80 @@
+[
+  {
+    "id": "press_weed_brick",
+    "name": "Press Weed Brick",
+    "icon": "💎",
+    "description": "Compress 5 units of loose weed into a high-density brick.",
+    "ingredients": { "weed": 5 },
+    "produces": { "weed_brick": 1 },
+    "timeMinutes": 10,
+    "toolsRequired": ["press"],
+    "unlockRep": 0,
+    "skillCheck": { "skill": "crafting", "difficulty": 2 },
+    "failureRate": 0.05
+  },
+  {
+    "id": "mix_molotov",
+    "name": "Molotov Cocktail",
+    "icon": "🔥",
+    "description": "Assemble a firebomb using glass and alcohol.",
+    "ingredients": { "glass": 1, "alcohol": 1 },
+    "produces": { "molotov": 1 },
+    "timeMinutes": 5,
+    "toolsRequired": ["funnel"],
+    "unlockRep": 5,
+    "skillCheck": { "skill": "chemistry", "difficulty": 3 },
+    "failureRate": 0.1
+  },
+  {
+    "id": "cook_mdma",
+    "name": "Cook MDMA Caps",
+    "icon": "💊",
+    "description": "Synthesize MDMA capsules from precursor chemicals.",
+    "ingredients": { "mdma_base": 2, "acid": 1, "sugar": 1 },
+    "produces": { "mdma": 3 },
+    "timeMinutes": 20,
+    "toolsRequired": ["stove", "flask"],
+    "unlockRep": 10,
+    "skillCheck": { "skill": "chemistry", "difficulty": 5 },
+    "failureRate": 0.15
+  },
+  {
+    "id": "forge_lockpick",
+    "name": "Forge Lockpick",
+    "icon": "🔓",
+    "description": "Bend and temper a metal shard into a makeshift lockpick.",
+    "ingredients": { "metal_shard": 1, "alcohol": 1 },
+    "produces": { "lockpick": 1 },
+    "timeMinutes": 8,
+    "toolsRequired": ["torch", "hammer"],
+    "unlockRep": 8,
+    "skillCheck": { "skill": "engineering", "difficulty": 4 },
+    "failureRate": 0.1
+  },
+  {
+    "id": "assemble_pipebomb",
+    "name": "Assemble Pipe Bomb",
+    "icon": "💣",
+    "description": "Combine explosives and a timer into a crude pipe bomb.",
+    "ingredients": { "gunpowder": 2, "metal_pipe": 1, "timer": 1 },
+    "produces": { "pipebomb": 1 },
+    "timeMinutes": 15,
+    "toolsRequired": ["screwdriver"],
+    "unlockRep": 15,
+    "skillCheck": { "skill": "explosives", "difficulty": 6 },
+    "failureRate": 0.2
+  },
+  {
+    "id": "brew_medkit",
+    "name": "Brew Medkit",
+    "icon": "🩹",
+    "description": "Pack a first-aid kit from bandages and antiseptic.",
+    "ingredients": { "bandage": 3, "antiseptic": 1 },
+    "produces": { "medkit": 1 },
+    "timeMinutes": 4,
+    "toolsRequired": [],
+    "unlockRep": 0,
+    "skillCheck": { "skill": "firstAid", "difficulty": 2 },
+    "failureRate": 0.05
+  }
+]
