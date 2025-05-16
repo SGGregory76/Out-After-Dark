@@ -1,14 +1,13 @@
 (function(){
-  // Missions module
-  const MISSIONS_URL =
-    'https://raw.githubusercontent.com/SGGregory76/Out-After-Dark/main/data/missions.json'
-    + '?t=' + Date.now();
-  const STATS_KEY = 'gameStats';
-  const MISSION_STATE_KEY = 'gameMissions';
+  // Missions module with items integration
+  const MISSIONS_URL = 'https://cdn.jsdelivr.net/gh/yourusername/yourrepo@main/data/missions.json';
+  const ITEMS_URL    = 'https://cdn.jsdelivr.net/gh/yourusername/yourrepo@main/data/items.json';
+  const STATS_KEY    = 'gameStats';
+  const MISSION_KEY  = 'gameMissions';
 
-  async function loadMissions() {
-    const res = await fetch(MISSIONS_URL);
-    if (!res.ok) throw new Error(res.statusText);
+  async function fetchJSON(url) {
+    const res = await fetch(url + '?t=' + Date.now());
+    if (!res.ok) throw new Error(`HTTP ${res.status} loading ${url}`);
     return res.json();
   }
 
@@ -17,66 +16,82 @@
     return s ? JSON.parse(s) : {};
   }
 
-  function saveMissionState(state) {
-    localStorage.setItem(MISSION_STATE_KEY, JSON.stringify(state));
-  }
-  function loadMissionState() {
-    const m = localStorage.getItem(MISSION_STATE_KEY);
-    return m ? JSON.parse(m) : {};
+  function loadInventory() {
+    try { return JSON.parse(localStorage.getItem('gameInventory'))||{}; }
+    catch { return {}; }
   }
 
-  function checkRequirements(req, stats, inventory) {
-    if ((stats.rep || 0) < (req.rep || 0)) return false;
-    for (let item in (req.items||{})) {
-      if ((inventory[item]||0) < req.items[item]) return false;
+  function loadMissionState() {
+    const m = localStorage.getItem(MISSION_KEY);
+    return m ? JSON.parse(m) : {};
+  }
+  function saveMissionState(state) {
+    localStorage.setItem(MISSION_KEY, JSON.stringify(state));
+  }
+
+  function checkRequirements(req, stats, inv) {
+    if ((stats.rep||0) < (req.rep||0)) return false;
+    for (let id in (req.items||{})) {
+      if ((inv[id]||0) < req.items[id]) return false;
     }
     return true;
   }
 
-  function renderMissions(missions) {
+  function renderMissions(missions, items) {
     const container = document.getElementById('missions-container');
     container.innerHTML = '';
     const stats = loadStats();
-    const inv = JSON.parse(localStorage.getItem('gameInventory')||'{}');
-    const mState = loadMissionState();
+    const inv   = loadInventory();
+    const state = loadMissionState();
 
     missions.forEach(m => {
-      const state = mState[m.id] || 'locked';
-      let status = state;
-      if (state === 'locked' && checkRequirements(m.requirements, stats, inv)) {
+      let status = state[m.id] || 'locked';
+      if (status==='locked' && checkRequirements(m.requirements, stats, inv)) {
         status = 'available';
       }
+
+      // build requirement text
+      const reqText = [];
+      if (m.requirements.rep) reqText.push(`Rep ≥ ${m.requirements.rep}`);
+      for (let id in (m.requirements.items||{})) {
+        const def=items[id]||{};
+        reqText.push(`${def.icon||''} ${def.name||id} x${m.requirements.items[id]}`);
+      }
+
       const card = document.createElement('div');
-      card.className = 'mission-card ' + status;
+      card.className = `mission-card ${status}`;
       card.innerHTML = `
         <h3>${m.title}</h3>
         <p>${m.description}</p>
-        <p>Status: ${status}</p>
+        <p><strong>Req:</strong> ${reqText.join(', ')||'None'}</p>
+        <p class="status-line">Status: ${status}</p>
         <button ${status!=='available'?'disabled':''} data-id="${m.id}">Start</button>
       `;
-      card.querySelector('button').onclick = () => startMission(m);
+      card.querySelector('button').onclick = () => startMission(m.id, missions, items);
       container.appendChild(card);
     });
   }
 
-  function startMission(mission) {
-    const mState = loadMissionState();
-    mState[mission.id] = 'inProgress';
-    saveMissionState(mState);
-    renderMissions(_MISSIONS);
-    // Here you could navigate flow or open mission modal
-    alert(`Mission '${mission.title}' started.`);
+  function startMission(id, missions, items) {
+    const s = loadMissionState();
+    s[id] = 'inProgress';
+    saveMissionState(s);
+    renderMissions(missions, items);
+    // optionally open mission detail modal
+    alert(`Mission ' ${missions.find(m=>m.id===id).title} ' started!`);
   }
 
-  let _MISSIONS = [];
-  document.addEventListener('DOMContentLoaded', async ()=>{
-    const cont = document.getElementById('missions-container');
-    if (!cont) return;
+  async function init() {
     try {
-      _MISSIONS = await loadMissions();
-      renderMissions(_MISSIONS);
+      const [missions, items] = await Promise.all([fetchJSON(MISSIONS_URL), fetchJSON(ITEMS_URL)]);
+      renderMissions(missions, Object.fromEntries(items.map(i=>[i.id,i])));
     } catch(err) {
-      cont.innerHTML = `<div class="error">Error loading missions:<br>${err.message}</div>`;
+      const c = document.getElementById('missions-container');
+      if (c) c.innerHTML = `<div class="error">${err.message}</div>`;
     }
+  }
+
+  document.addEventListener('DOMContentLoaded', ()=>{
+    if (document.getElementById('missions-container')) init();
   });
 })();
