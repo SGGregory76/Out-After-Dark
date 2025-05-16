@@ -1,6 +1,6 @@
 (function(){
   const STATS_KEY = 'gameStats';
-  const STATS_URL = 'https://raw.githubusercontent.com/yourusername/yourrepo/main/data/stats.json'
+  const STATS_URL = 'https://raw.githubusercontent.com/SGGregory76/Out-After-Dark/main/data/stats.json'
                   + '?t=' + Date.now();
 
   // Load defaults from stats.json if needed
