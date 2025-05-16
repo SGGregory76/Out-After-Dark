@@ -4,10 +4,9 @@
     "name": "Blaze",
     "role": "Dealer",
     "status": "friendly",
-    "offers": [
-      { "item": "weed", "buyPriceMult": 0.9, "sellPriceMult": 1.1 },
-      { "item": "coke", "buyPriceMult": 1.0, "sellPriceMult": 1.2 }
-    ],
+    "emoji": "🔥",
+    "iconClass": "fa-solid fa-fire",
+    "offers": ["weed", "cocaine"],
     "missions": ["blaze_intro", "blaze_resupply"],
     "rules": {
       "unlockRep": 0,
@@ -19,10 +18,9 @@
     "name": "Maya",
     "role": "Supplier",
     "status": "neutral",
-    "offers": [
-      { "item": "mdma", "buyPriceMult": 0.85, "sellPriceMult": 1.15 },
-      { "item": "lsd",  "buyPriceMult": 0.8, "sellPriceMult": 1.2 }
-    ],
+    "emoji": "🌟",
+    "iconClass": "fa-solid fa-gem",
+    "offers": ["mdma", "lsd"],
     "missions": ["maya_supply_run", "maya_backdoor"],
     "rules": {
       "unlockRep": 10,
@@ -33,12 +31,11 @@
     "id": "rico",
     "name": "Rico",
     "role": "Runner",
-    "status": "neutral",
-    "offers": [
-      { "item": "weed", "buyPriceMult": 1.0, "sellPriceMult": 1.0 },
-      { "item": "water","buyPriceMult": 0.5, "sellPriceMult": 0.75 }
-    ],
-    "missions": ["rico_delivery"],
+    "status": "friendly",
+    "emoji": "🚀",
+    "iconClass": "fa-solid fa-rocket",
+    "offers": ["weed", "water"],
+    "missions": ["rico_delivery", "rico_escape"],
     "rules": {
       "unlockRep": 5,
       "cooldownHours": 0.5
@@ -49,10 +46,10 @@
     "name": "Silk",
     "role": "Chemist",
     "status": "hostile",
-    "offers": [
-      { "item": "acid", "buyPriceMult": 1.2, "sellPriceMult": 1.5 }
-    ],
-    "missions": ["silk_experiment"],
+    "emoji": "⚗️",
+    "iconClass": "fa-solid fa-vial",
+    "offers": ["acid"],
+    "missions": ["silk_experiment", "silk_breakin"],
     "rules": {
       "unlockRep": 20,
       "cooldownHours": 3
@@ -63,11 +60,27 @@
     "name": "Viper",
     "role": "Enforcer",
     "status": "hostile",
+    "emoji": "🦂",
+    "iconClass": "fa-solid fa-bug",
     "offers": [],
     "missions": ["viper_intimidate"],
     "rules": {
       "unlockRep": 15,
       "cooldownHours": 4
+    }
+  },
+  {
+    "id": "echo",
+    "name": "Echo",
+    "role": "Hacker",
+    "status": "neutral",
+    "emoji": "💻",
+    "iconClass": "fa-solid fa-laptop-code",
+    "offers": [],
+    "missions": ["echo_backdoor", "echo_dataheist"],
+    "rules": {
+      "unlockRep": 8,
+      "cooldownHours": 1.5
     }
   }
 ]
