@@ -1,90 +1,91 @@
-(function(){
-  // Inventory module
-  const PRODUCTS_URL =
-    'https://raw.githubusercontent.com/SGGregory76/Out-After-Dark/main/data/products.json'
-    + '?t=' + Date.now();
-  const CASH_KEY = 'gameCash';
-  const INV_KEY  = 'gameInventory';
+(async function(){
+  // Unified Inventory Script using items.json
+  const ITEMS_URL = 'https://cdn.jsdelivr.net/gh/yourusername/yourrepo@main/data/items.json';
+  const INV_KEY   = 'gameInventory';
+  const CASH_KEY  = 'gameCash';
 
-  async function loadProducts() {
-    const res = await fetch(PRODUCTS_URL);
-    if (!res.ok) throw new Error(res.statusText);
+  // Load JSON helper
+  async function fetchJSON(url){
+    const res = await fetch(url + '?t='+Date.now());
+    if(!res.ok) throw new Error(`HTTP ${res.status} loading ${url}`);
     return res.json();
   }
 
-  function loadState() {
-    const cash = parseInt(localStorage.getItem(CASH_KEY) || '0', 10);
+  // State helpers
+  function loadState(){
     const inv = JSON.parse(localStorage.getItem(INV_KEY) || '{}');
-    return { cash, inv };
+    const cash= parseInt(localStorage.getItem(CASH_KEY)||'0',10);
+    return { inv, cash };
+  }
+  function saveState({inv, cash}){
+    localStorage.setItem(INV_KEY, JSON.stringify(inv));
+    localStorage.setItem(CASH_KEY, cash);
   }
 
-  function saveState(state) {
-    localStorage.setItem(CASH_KEY, state.cash);
-    localStorage.setItem(INV_KEY, JSON.stringify(state.inv));
+  // Render stats bar
+  function renderStats(state){
+    document.getElementById('stat-cash').textContent = `💵 $${state.cash}`;
   }
 
-  function createCard(p, state, onUpdate) {
-    const qty = state.inv[p.id] || 0;
-    const card = document.createElement('div');
-    card.className = 'inventory-card';
-    card.innerHTML = `
-      <div class="icon">${p.emoji}</div>
-      <div class="name">${p.name}</div>
-      <div class="qty">x${qty}</div>
-      <button data-action="use" ${qty<=0?'disabled':''}>Use</button>
-      <button data-action="sell" ${qty<=0?'disabled':''}>Sell $${p.basePrice}</button>
-      <button data-action="discard" ${qty<=0?'disabled':''}>Discard</button>
-    `;
-    card.querySelectorAll('button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const action = btn.getAttribute('data-action');
-        if (qty <= 0) return;
-        if (action === 'use') {
-          state.inv[p.id]--;
-        } else if (action === 'sell') {
-          state.inv[p.id]--;
-          state.cash += p.basePrice;
-        } else if (action === 'discard') {
-          state.inv[p.id]--;
-        }
-        saveState(state);
-        onUpdate();
-      });
-    });
-    return card;
-  }
-
-  function renderGrid(products, state) {
+  // Render inventory
+  function renderInventory(items, state){
     const grid = document.getElementById('inventory-grid');
-    const cashEl = document.getElementById('stat-cash');
-    cashEl.textContent = state.cash;
     grid.innerHTML = '';
-
-    products.forEach(p => {
-      if (state.inv[p.id] == null) state.inv[p.id] = 0;
-      const card = createCard(p, state, () => renderGrid(products, state));
+    items.forEach(item => {
+      const qty = state.inv[item.id]||0;
+      if(qty <= 0) return; // skip zero quantity
+      const card = document.createElement('div');
+      card.className = 'inventory-card';
+      card.innerHTML = `
+        <div class="icon">${item.icon}</div>
+        <div class="name">${item.name}</div>
+        <div class="qty">x${qty}</div>
+        <button data-act="use">Use</button>
+        <button data-act="sell">Sell $${item.baseValue}</button>
+        <button data-act="discard">Discard</button>
+      `;
+      const buttons = card.querySelectorAll('button');
+      buttons.forEach(btn => btn.disabled = qty<=0);
+      buttons[0].onclick = () => {
+        // handle use
+        if(item.uses.includes('use')){
+          // e.g., apply heal or effect
+        }
+        updateItem(item.id, -1);
+      };
+      buttons[1].onclick = () => {
+        // sell
+        state.cash += item.baseValue;
+        updateItem(item.id, -1);
+      };
+      buttons[2].onclick = () => updateItem(item.id, -1);
       grid.appendChild(card);
     });
   }
 
-  window.Inventory = {
-    init: async function() {
-      try {
-        const products = await loadProducts();
-        const state = loadState();
-        renderGrid(products, state);
-      } catch (err) {
-        document.getElementById('inventory-grid').innerHTML =
-          `<div class="loading" style="color:#f66;">Error: ${err.message}</div>`;
-      }
-    }
-  };
+  function updateItem(id, delta){
+    const state = loadState();
+    state.inv[id] = Math.max(0, (state.inv[id]||0) + delta);
+    saveState(state);
+    init();
+  }
 
-  // Auto init on page load if element exists
-  window.addEventListener('load', () => {
-    if (document.getElementById('inventory-grid')) {
-      Inventory.init();
+  // Initialization
+  async function init(){
+    try {
+      const itemsData = await fetchJSON(ITEMS_URL);
+      const state = loadState();
+      renderStats(state);
+      // filter items that have 'use' or 'sell' or 'discard'
+      renderInventory(itemsData, state);
+    } catch(e) {
+      document.getElementById('inventory-grid').innerHTML =
+        `<div class="error">Error: ${e.message}</div>`;
     }
+  }
+
+  document.addEventListener('DOMContentLoaded', ()=>{
+    if(!document.getElementById('inventory-grid')) return;
+    init();
   });
 })();
-
