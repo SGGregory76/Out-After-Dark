@@ -1,7 +1,7 @@
 (function(){
-  const STATS_KEY       = 'gameStats';
-  const STATS_JSON_URL  = 'https://cdn.jsdelivr.net/gh/SGGregory76/Out-After-Dark@main/data/stats.json';
-  let   DEFAULT_STATS   = null;
+  const STATS_KEY        = 'gameStats';
+  const STATS_JSON_URL   = 'https://cdn.jsdelivr.net/gh/SGGregory76/Out-After-Dark@main/data/stats.json';
+  let   DEFAULT_STATS    = null;
   let   gameOverTriggered = false;
 
   // Load default stats schema from stats.json
@@ -34,33 +34,37 @@
     localStorage.setItem(STATS_KEY, JSON.stringify(stats));
   }
 
-  // Render stats both to hidden spans (if any) and to the hub
+  // Render stats to both hidden spans and the visible hub
   function renderStats(s) {
     const icons = {
-      health:   '&#10084;', // ❤
-      stamina:  '💪',
-      hunger:   '🍗',
-      thirst:   '💧',
-      rep:      '🤝',
+      health:   '❤',
+      energy:   '⚡',
+      atk:      '🥊',
+      def:      '🛡️',
+      rp:       '🧪',
+      xp:       '⭐',
+      level:    '🎚️',
+      cash:     '💵',
       heat:     '🔥',
-      cash:     '💵'
+      rep:      '🧢'
     };
+
     Object.keys(icons).forEach(key => {
-      // hidden span id=stat-{key}
+      // hidden span id="stat-{key}"
       const hid = document.getElementById(`stat-${key}`);
       if (hid) {
-        if (key==='health' || key==='stamina') {
-          const maxKey = key==='health' ? 'maxHealth' : 'maxStamina';
+        if (key === 'health' || key === 'energy') {
+          const maxKey = key === 'health' ? 'maxHealth' : 'maxEnergy';
           hid.textContent = `${icons[key]} ${s[key]}/${s[maxKey]}`;
         } else {
           hid.textContent = `${icons[key]} ${s[key]}`;
         }
       }
-      // visible hub id=hub-{key}
+      // visible hub id="hub-{key}"
       const hub = document.getElementById(`hub-${key}`);
       if (hub) {
-        if (key==='health' || key==='stamina') {
-          const maxKey = key==='health' ? 'maxHealth' : 'maxStamina';
+        if (key === 'health' || key === 'energy') {
+          const maxKey = key === 'health' ? 'maxHealth' : 'maxEnergy';
           hub.innerHTML = `${icons[key]} ${s[key]}/${s[maxKey]}`;
         } else {
           hub.textContent = `${icons[key]} ${s[key]}`;
@@ -72,13 +76,9 @@
   // The periodic tick logic
   async function tick() {
     const s = await loadStats();
-    // apply decay/regeneration rules
-    s.hunger = Math.min(100, s.hunger + 1);
-    s.thirst = Math.min(100, s.thirst + 1);
-    if (s.hunger > 80 || s.thirst > 80) {
-      s.health = Math.max(0, s.health - 1);
-    }
-    s.stamina = Math.min(s.maxStamina, s.stamina + 2);
+
+    // Regenerate energy each tick
+    s.energy = Math.min(s.maxEnergy, s.energy + 1);
 
     saveStats(s);
     renderStats(s);
@@ -88,7 +88,6 @@
       gameOverTriggered = true;
       setTimeout(() => {
         if (confirm('Game Over! Your character has died. Restart the game?')) {
-          // clear all relevant keys
           [
             STATS_KEY,
             'gameInventory',
@@ -110,6 +109,8 @@
     init: async function(intervalMs = 60000) {
       const s = await loadStats();
       renderStats(s);
+
+      // Immediate Game Over check
       if (!gameOverTriggered && s.health <= 0) {
         gameOverTriggered = true;
         setTimeout(() => {
@@ -127,6 +128,7 @@
           }
         }, 200);
       }
+
       setInterval(tick, intervalMs);
     }
   };
@@ -145,7 +147,10 @@
 
   // Auto‑init if relevant spans/hub exist
   document.addEventListener('DOMContentLoaded', async () => {
-    if (document.getElementById('stat-health') || document.getElementById('hub-health')) {
+    if (
+      document.getElementById('stat-health') ||
+      document.getElementById('hub-health')
+    ) {
       await StatsTick.init();
     }
   });
