@@ -1,164 +1,116 @@
 /* Base & Resets */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; }
 body {
   background: #111;
   color: #eee;
   font-family: 'Segoe UI', sans-serif;
-  width: 100%;
+  margin: 0;
+  padding: 20px;
 }
 
 /* Dialogue & Buttons */
-.question,
-.fight-intro {
-  padding: 16px;
+.question, .fight-intro {
   font-size: 1.2rem;
-}
-ul {
-  list-style: none;
   margin-bottom: 16px;
 }
-li {
-  margin-bottom: 8px;
-}
+ul { list-style: none; margin-bottom: 16px; }
+li { margin-bottom: 8px; }
 .answer-btn {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  background: #222;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-  text-align: center;
+  display: block; width: 100%; padding: 12px;
+  background: #222; color: #fff; border: none;
+  border-radius: 4px; cursor: pointer;
+  font-size: 1rem; text-align: center;
   transition: background 0.2s;
 }
-.answer-btn:hover:not(:disabled) {
-  background: #333;
-}
-.answer-btn:disabled {
-  background: #555;
-  cursor: not-allowed;
-}
+.answer-btn:hover:not(:disabled) { background: #333; }
+.answer-btn:disabled { background: #555; cursor: not-allowed; }
 
 /* Stats HUD */
 .stats {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 0;
-  border-bottom: 1px solid #444;
-  color: #ddd;
+  display: flex; justify-content: space-between;
+  margin: 16px 0; color: #ddd;
 }
-.stats span {
-  flex: 1;
-  text-align: center;
-}
+.stats span { flex: 1; text-align: center; }
 
 /* Combat Log */
 .combat-log {
-  background: #222;
-  padding: 12px;
-  border: 1px solid #444;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  max-height: 150px;
-  overflow-y: auto;
-  margin-bottom: 16px;
+  background: #222; padding: 12px;
+  border: 1px solid #444; border-radius: 4px;
+  font-size: 0.9rem; max-height: 150px;
+  overflow-y: auto; margin-bottom: 16px;
   color: #ddd;
 }
 
 /* Search Puzzle Grid */
 .search-grid {
-  display: grid;
+  display: grid; gap: 8px; margin: 16px 0;
   grid-template-columns: repeat(var(--cols), 1fr);
-  gap: 8px;
-  margin: 16px 0;
 }
 .search-cell {
-  background: #222;
-  height: 60px;
-  border: 1px solid #444;
-  cursor: pointer;
+  background: #222; height: 60px;
+  border: 1px solid #444; cursor: pointer;
 }
-.search-cell.found {
-  background: #4a4;
-}
+.search-cell.found { background: #4a4; }
 
 /* Summary Screen */
-.summary {
-  font-size: 1rem;
-  margin-top: 20px;
-}
+.summary { font-size: 1rem; margin-top: 20px; }
 pre.final-stats {
-  background: #222;
-  color: #0f0;
-  padding: 10px;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  max-height: 150px;
-  overflow-y: auto;
-  margin: 16px 0;
+  background: #222; color: #0f0;
+  padding: 10px; border-radius: 4px;
+  font-size: 0.9rem; max-height: 150px;
+  overflow-y: auto; margin: 16px 0;
 }
 
-/* === Mafia Wars Style Combat === */
+/* === Mafia‑Wars Combat Styling === */
 body.combat {
   background: url('/images/mafia-bg.jpg') center/cover no-repeat;
 }
-.fight-intro {
+
+body.combat .fight-intro {
   font-family: 'Impact', sans-serif;
-  font-size: 1.6rem;
-  color: #e0b25b;
+  font-size: 1.6rem; color: #e0b25b;
   text-shadow: 2px 2px 4px #000;
-  margin-bottom: 24px;
-  padding: 8px;
-  border: 2px solid #e0b25b;
-  border-radius: 6px;
+  margin-bottom: 24px; padding: 8px;
+  border: 2px solid #e0b25b; border-radius: 6px;
   background: rgba(0,0,0,0.6);
 }
-.stats.combat {
+
+body.combat .stats {
   background: rgba(0,0,0,0.7);
-  border: 2px solid #e0b25b;
-  border-radius: 6px;
-  padding: 12px;
-  margin: 24px 0;
-  display: flex;
-  justify-content: space-around;
+  border: 2px solid #e0b25b; border-radius: 6px;
+  padding: 12px; margin: 24px 0;
 }
-.stats.combat span {
-  font-weight: bold;
-  color: #fff;
+
+body.combat .stats span {
+  color: #fff; font-weight: bold;
   text-shadow: 1px 1px 2px #000;
 }
-.combat-log {
+
+body.combat .combat-log {
   background: rgba(0,0,0,0.8);
   border-left: 6px solid #e0b25b;
   padding: 12px 16px;
   font-family: 'Courier New', monospace;
-  font-size: 0.9rem;
-  max-height: 180px;
-  overflow-y: auto;
-  margin-bottom: 24px;
+  font-size: 0.9rem; max-height: 180px;
+  overflow-y: auto; margin-bottom: 24px;
   color: #ddd;
 }
-.fight-actions .answer-btn {
+
+body.combat .fight-actions .answer-btn {
   background: linear-gradient(to bottom, #333, #111);
   border: 2px solid #e0b25b;
-  color: #e0b25b;
-  font-weight: bold;
+  color: #e0b25b; font-weight: bold;
   box-shadow: 0 4px 6px rgba(0,0,0,0.8);
   transition: background 0.2s, transform 0.1s;
 }
-.fight-actions .answer-btn:hover:not(:disabled) {
+
+body.combat .fight-actions .answer-btn:hover:not(:disabled) {
   background: linear-gradient(to bottom, #444, #222);
   transform: translateY(-1px);
 }
-.fight-actions .answer-btn:disabled {
-  background: #555;
-  border-color: #777;
-  color: #777;
-  cursor: not-allowed;
+
+body.combat .fight-actions .answer-btn:disabled {
+  background: #555; border-color: #777;
+  color: #777; cursor: not-allowed;
 }
