@@ -13,18 +13,24 @@
     DEFAULT_STATS = json.defaultStats;
   }
 
-  // Load player stats, initializing with defaults if missing
+  // Load player stats, initializing with defaults if missing or schema‑mismatched
   async function loadStats() {
     await loadDefaults();
     const raw = localStorage.getItem(STATS_KEY);
     if (raw) {
       try {
-        return Object.assign({}, DEFAULT_STATS, JSON.parse(raw));
+        const parsed = JSON.parse(raw);
+        // Ensure all required keys exist
+        const required = ['health','maxHealth','energy','maxEnergy','atk','def','cash','heat','rep','rp','xp','level'];
+        const hasAll = required.every(k => k in parsed);
+        if (!hasAll) throw new Error('old schema');
+        // Merge defaults and existing
+        return Object.assign({}, DEFAULT_STATS, parsed);
       } catch {
-        // fall through to reinitialize
+        // invalid JSON or old schema => reinitialize
       }
     }
-    // first‑time setup
+    // first‑time setup or after schema mismatch
     localStorage.setItem(STATS_KEY, JSON.stringify(DEFAULT_STATS));
     return { ...DEFAULT_STATS };
   }
@@ -34,7 +40,7 @@
     localStorage.setItem(STATS_KEY, JSON.stringify(stats));
   }
 
-  // Render stats to both hidden spans and the visible hub
+  // Render stats to hub
   function renderStats(s) {
     const icons = {
       health:   '❤',
@@ -50,56 +56,34 @@
     };
 
     Object.keys(icons).forEach(key => {
-      // hidden span id="stat-{key}"
-      const hid = document.getElementById(`stat-${key}`);
-      if (hid) {
-        if (key === 'health' || key === 'energy') {
-          const maxKey = key === 'health' ? 'maxHealth' : 'maxEnergy';
-          hid.textContent = `${icons[key]} ${s[key]}/${s[maxKey]}`;
-        } else {
-          hid.textContent = `${icons[key]} ${s[key]}`;
-        }
-      }
-      // visible hub id="hub-{key}"
       const hub = document.getElementById(`hub-${key}`);
       if (hub) {
-        if (key === 'health' || key === 'energy') {
-          const maxKey = key === 'health' ? 'maxHealth' : 'maxEnergy';
-          hub.innerHTML = `${icons[key]} ${s[key]}/${s[maxKey]}`;
+        if (key==='health'||key==='energy') {
+          const maxKey = key==='health'?'maxHealth':'maxEnergy';
+          hub.innerText = `${icons[key]} ${s[key]}/${s[maxKey]}`;
         } else {
-          hub.textContent = `${icons[key]} ${s[key]}`;
+          hub.innerText = `${icons[key]} ${s[key]}`;
         }
       }
     });
   }
 
-  // The periodic tick logic
+  // Periodic tick: regen energy
   async function tick() {
     const s = await loadStats();
-
-    // Regenerate energy each tick
     s.energy = Math.min(s.maxEnergy, s.energy + 1);
-
     saveStats(s);
     renderStats(s);
 
-    // Game Over check
     if (!gameOverTriggered && s.health <= 0) {
       gameOverTriggered = true;
       setTimeout(() => {
         if (confirm('Game Over! Your character has died. Restart the game?')) {
-          [
-            STATS_KEY,
-            'gameInventory',
-            'gameCraftJobs',
-            'gameMissions',
-            'gameLog',
-            'gameSettings',
-            'gameCash'
-          ].forEach(k => localStorage.removeItem(k));
+          [STATS_KEY,'gameInventory','gameCraftJobs','gameMissions','gameLog','gameSettings','gameCash']
+            .forEach(k=>localStorage.removeItem(k));
           location.reload();
         }
-      }, 200);
+      },200);
     }
   }
 
@@ -109,35 +93,24 @@
     init: async function(intervalMs = 60000) {
       const s = await loadStats();
       renderStats(s);
-
-      // Immediate Game Over check
       if (!gameOverTriggered && s.health <= 0) {
         gameOverTriggered = true;
         setTimeout(() => {
           if (confirm('Game Over! Your character has died. Restart the game?')) {
-            [
-              STATS_KEY,
-              'gameInventory',
-              'gameCraftJobs',
-              'gameMissions',
-              'gameLog',
-              'gameSettings',
-              'gameCash'
-            ].forEach(k => localStorage.removeItem(k));
+            [STATS_KEY,'gameInventory','gameCraftJobs','gameMissions','gameLog','gameSettings','gameCash']
+              .forEach(k=>localStorage.removeItem(k));
             location.reload();
           }
-        }, 200);
+        },200);
       }
-
       setInterval(tick, intervalMs);
     }
   };
 
-  // Listen for external updates
+  // Listen storage and custom events
   window.addEventListener('storage', async e => {
-    if (e.key === STATS_KEY) {
-      const s = await loadStats();
-      renderStats(s);
+    if (e.key===STATS_KEY) {
+      try { renderStats(await loadStats()); } catch {};
     }
   });
   window.addEventListener('statsUpdated', async e => {
@@ -145,12 +118,9 @@
     renderStats(Object.assign({}, DEFAULT_STATS, e.detail));
   });
 
-  // Auto‑init if relevant spans/hub exist
+  // Auto‑init on DOM
   document.addEventListener('DOMContentLoaded', async () => {
-    if (
-      document.getElementById('stat-health') ||
-      document.getElementById('hub-health')
-    ) {
+    if (window.StatsTick && typeof StatsTick.init==='function') {
       await StatsTick.init();
     }
   });
