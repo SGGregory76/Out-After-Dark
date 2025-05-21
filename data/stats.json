@@ -9,8 +9,39 @@
     "cash": 0,
     "heat": 0,
     "rep": 0,
-    "rp": 0,
     "xp": 0,
     "level": 1
-  }
+  },
+  "inventoryChoices": {
+    "start": [
+      { "id": "energyPack",    "label": "Energy Pack (+10 Energy)",    "delta": { "energy": 10 } },
+      { "id": "medkit",         "label": "Medkit (+20 Health)",         "delta": { "health": 20 } },
+      { "id": "lockpick",       "label": "Lockpick (+2 Rep)",           "delta": { "rep": 2 } }
+    ],
+    "postCombat": [
+      { "id": "adrenalineShot",  "label": "Adrenaline Shot (+15 Energy)",  "delta": { "energy": 15 } },
+      { "id": "bandages",       "label": "Bandages (+15 Health)",       "delta": { "health": 15 } },
+      { "id": "smokeBomb",      "label": "Smoke Bomb (+1 Rep)",         "delta": { "rep": 1 } }
+    ]
+  },
+  "puzzles": [
+    {
+      "id": "puzzle-search",
+      "type": "search",
+      "prompt": "Find the hidden stash within limited clicks.",
+      "gridSize": 4,
+      "maxClicks": 6,
+      "stashPosition": { "row": 2, "col": 3 },
+      "delta": { "cash": 50, "rep": 1 }
+    },
+    {
+      "id": "puzzle-2",
+      "type": "search",
+      "prompt": "Locate the enemy's weak point.",
+      "gridSize": 3,
+      "maxClicks": 4,
+      "stashPosition": { "row": 1, "col": 2 },
+      "delta": { "xp": 10 }
+    }
+  ]
 }
