@@ -1,75 +1,36 @@
 {
-  "gameCash": 150,
-  "inventory": [
+  "start": [
     {
-      "id": "water_bottle",
-      "name": "Water Bottle",
-      "icon": "💧",
-      "quantity": 5,
-      "unitWeight": 0.5,
-      "totalWeight": 2.5,
-      "unitValue": 2,
-      "totalValue": 10,
-      "usable": { "thirstRegen": 20 },
-      "sellable": true
+      "id": "energyPack",
+      "label": "Energy Pack (+10 Energy)",
+      "delta": { "energy": 10 }
     },
     {
-      "id": "canned_food",
-      "name": "Canned Food",
-      "icon": "🥫",
-      "quantity": 3,
-      "unitWeight": 0.7,
-      "totalWeight": 2.1,
-      "unitValue": 10,
-      "totalValue": 30,
-      "usable": { "hungerRegen": 25 },
-      "sellable": true
-    },
-    {
-      "id": "bandage",
-      "name": "Bandage",
-      "icon": "🩹",
-      "quantity": 2,
-      "unitWeight": 0.1,
-      "totalWeight": 0.2,
-      "unitValue": 10,
-      "totalValue": 20,
-      "usable": { "healAmount": 10 },
-      "sellable": false
-    },
-    {
-      "id": "weed",
-      "name": "Loose Weed",
-      "icon": "🌿",
-      "quantity": 10,
-      "unitWeight": 0.01,
-      "totalWeight": 0.1,
-      "unitValue": 5,
-      "totalValue": 50,
-      "usable": {
-        "effect": "euphoria",
-        "durationMinutes": 15,
-        "staminaRegen": 5,
-        "stealthBonus": 10,
-        "sideEffect": {
-          "hungerIncrease": 5,
-          "thirstIncrease": 5
-        }
-      },
-      "sellable": true,
-      "sellable": true
+      "id": "medkit",
+      "label": "Medkit (+20 Health)",
+      "delta": { "health": 20 }
     },
     {
       "id": "lockpick",
-      "name": "Lockpick",
-      "icon": "🔓",
-      "quantity": 1,
-      "unitWeight": 0.02,
-      "totalWeight": 0.02,
-      "unitValue": 25,
-      "totalValue": 25,
-      "usable": false,
-      "sellable": true
+      "label": "Lockpick (+2 Rep)",
+      "delta": { "rep": 2 }
+    }
+  ],
+  "postCombat": [
+    {
+      "id": "adrenalineShot",
+      "label": "Adrenaline Shot (+15 Energy)",
+      "delta": { "energy": 15 }
+    },
+    {
+      "id": "bandages",
+      "label": "Bandages (+15 Health)",
+      "delta": { "health": 15 }
+    },
+    {
+      "id": "smokeBomb",
+      "label": "Smoke Bomb (+1 Rep)",
+      "delta": { "rep": 1 }
     }
   ]
 }
