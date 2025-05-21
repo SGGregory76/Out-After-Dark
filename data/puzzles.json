@@ -1,25 +1,22 @@
-[
-  {
-    "id": "puzzle-1",
-    "type": "riddle",
-    "prompt": "I speak without a mouth and hear without ears. What am I?",
-    "answer": "echo",
-    "weight": { "xp": 1, "rep": 1 }
-  },
-  {
-    "id": "puzzle-2",
-    "type": "code",
-    "prompt": "Enter the 4-digit passcode (hint: year of the big boom)",
-    "answer": "1929",
-    "weight": { "rp": 2 }
-  },
-  {
-    "id": "puzzle-search",
-    "type": "search",
-    "prompt": "Find the hidden stash within 5 clicks.",
-    "gridSize": 4,
-    "maxClicks": 5,
-    "stashPosition": { "row": 2, "col": 3 },
-    "weight": { "cash": 10, "heat": -1 }
-  }
-]
+  "puzzles": [
+    {
+      "id": "puzzle-search",
+      "type": "search",
+      "prompt": "Find the hidden stash within limited clicks.",
+      "gridSize": 4,
+      "maxClicks": 6,
+      "stashPosition": { "row": 2, "col": 3 },
+      "delta": { "cash": 50, "rep": 1 }
+    },
+    {
+      "id": "puzzle-2",
+      "type": "search",
+      "prompt": "Locate the enemy's weak point.",
+      "gridSize": 3,
+      "maxClicks": 4,
+      "stashPosition": { "row": 1, "col": 2 },
+      "delta": { "xp": 10 }
+    }
+  ]
+});
+
